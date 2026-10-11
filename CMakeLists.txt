@@ -38,15 +38,15 @@ project(MP3-PLAYER C CXX ASM)
 pico_sdk_init()
 
 # ---- Third-party libraries -------------------------------------------------
-add_subdirectory(libraries/FatFs_SPI)
-add_subdirectory(libraries/pico_audio_i2s_32b/src/pico_audio_32b pico_audio_32b)
-add_subdirectory(libraries/pico_audio_i2s_32b pico_audio_i2s_32b)
+
+add_subdirectory(libraries/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico-3.5.1/src build)
+
 
 # ---- Application -----------------------------------------------------------
 # One line per module. Add display.c / inputs.c here as you build them.
 add_executable(MP3-PLAYER
     main.c
-    hw_config.c
+    config.h
     src/audio_out.c
     src/storage.c
     src/mp3_player.c
@@ -61,10 +61,14 @@ pico_enable_stdio_uart(MP3-PLAYER 0)
 pico_enable_stdio_usb(MP3-PLAYER 1)
 
 target_include_directories(MP3-PLAYER PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}                    # config.h
+    ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/src
     ${CMAKE_CURRENT_LIST_DIR}/include
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/minimp3
+    ${CMAKE_CURRENT_LIST_DIR}/libraries/
+    ${CMAKE_CURRENT_LIST_DIR}/libraries/pico-extras
+    ${CMAKE_CURRENT_LIST_DIR}/libraries/pico_audio_i2s_32b
+    ${CMAKE_CURRENT_LIST_DIR}/libraries/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico-3.5.1
+    ${CMAKE_CURRENT_LIST_DIR}/libraries/Helix-MP3-Decoder
 )
 
 target_link_libraries(MP3-PLAYER
@@ -74,13 +78,11 @@ target_link_libraries(MP3-PLAYER
     hardware_dma
     hardware_pio
     hardware_vreg
-    FatFs_SPI
-    pico_audio_32b
-    pico_audio_i2s_32b
+    no-OS-FatFS-SD-SDIO-SPI-RPi-Pico
 )
 
 pico_add_extra_outputs(MP3-PLAYER)
 
-target_compile_definitions(MP3-PLAYER PRIVATE
-    PICO_AUDIO_I2S_DMA_IRQ=1
-)
+#target_compile_definitions(MP3-PLAYER PRIVATE
+ #   PICO_AUDIO_I2S_DMA_IRQ=1
+#)

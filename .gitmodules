@@ -7,3 +7,6 @@
 [submodule "libraries/pico_audio_i2s_32b"]
 	path = libraries/pico_audio_i2s_32b
 	url = https://github.com/elehobica/pico_audio_i2s_32b.git
+[submodule "libraries/Helix-MP3-Decoder"]
+	path = libraries/Helix-MP3-Decoder
+	url = https://github.com/Lefucjusz/Helix-MP3-Decoder.git
